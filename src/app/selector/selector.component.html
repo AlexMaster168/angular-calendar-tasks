@@ -1,0 +1,11 @@
+<p>
+
+  <fa-icon [icon]="faArrowLeft" (click)="go(-1)"></fa-icon>
+
+  <span>{{ dateService.date | async | moment }}</span>
+
+  <fa-icon [icon]="faArrowRight" (click)="go(1)"></fa-icon>
+</p>
+<div class="clock">
+  <strong>{{date | date: 'HH:mm:ss'}}</strong>
+</div>

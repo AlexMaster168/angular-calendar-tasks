@@ -1,0 +1,53 @@
+<section *ngIf="isOpen">
+  <div class="modal-body">
+    <h1>{{tasks[indexTask].id}}</h1>
+      <button class='btn' (click)="isOpen = false">&times;</button>
+      <input type="text" [(ngModel)]="tasks[indexTask].title">
+      <fa-icon class="btn btn-primary" [icon]="faPenToSquare" (click)="update(tasks[indexTask])"></fa-icon>
+  </div>
+</section>
+
+
+<section>
+  <header>
+    Organizer: <strong>{{dateService.date | async | moment:'DD.MM.YYYY'}}</strong>
+    <hr/>
+  </header>
+
+  <div class="filter">
+    <input
+      type="text"
+      placeholder="Введите ваш запрос..."
+      [(ngModel)]="searchString"
+    >
+  </div>
+
+  <main>
+    <ul *ngIf="tasks.length; else noTasks">
+      <li class="task" *ngFor="let task of tasks | tasksFilter:searchString; let i = index">
+        <span>
+          <strong>{{i + 1}}</strong>
+          {{task.title}}
+        </span>
+        <fa-icon class="btn btn-primary" [icon]="faTrashRestore" (click)="remove(task)"></fa-icon>
+        <fa-icon class="btn btn-primary" [icon]="faPenToSquare" (click)="allowUpdate(task)"></fa-icon>
+      </li>
+    </ul>
+    <ng-template #noTasks>
+      <p class="text-center">Нет задач на этот день...</p>
+    </ng-template>
+  </main>
+
+  <footer>
+    <form (ngSubmit)="submit()" [formGroup]="form">
+      <input type="text" formControlName="title">
+
+      <button
+        type="submit"
+        class="btn btn-primary btn-block"
+        [disabled]="form.invalid"
+      >Add
+      </button>
+    </form>
+  </footer>
+</section>
