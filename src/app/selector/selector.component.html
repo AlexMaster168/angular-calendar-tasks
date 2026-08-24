@@ -1,11 +1,32 @@
-<p>
+<div class="selector-card">
+  <div class="month-nav">
+    <button class="nav-btn" (click)="go(-1)">
+      <fa-icon [icon]="faArrowLeft"></fa-icon>
+    </button>
+    <span class="month-label">{{ dateService.date | async | moment }}</span>
+    <button class="nav-btn" (click)="go(1)">
+      <fa-icon [icon]="faArrowRight"></fa-icon>
+    </button>
+  </div>
 
-  <fa-icon [icon]="faArrowLeft" (click)="go(-1)"></fa-icon>
-
-  <span>{{ dateService.date | async | moment }}</span>
-
-  <fa-icon [icon]="faArrowRight" (click)="go(1)"></fa-icon>
-</p>
-<div class="clock">
-  <strong>{{date | date: 'HH:mm:ss'}}</strong>
+  <div class="clock-container">
+    <div class="clock">
+      <div class="clock-icon">
+        <fa-icon [icon]="faClock"></fa-icon>
+      </div>
+      <div class="clock-digits">
+        @for (digit of ('' + (date | date:'HH')).split(''); track $index) {
+          <span class="digit">{{ digit }}</span>
+        }
+        <span class="separator">:</span>
+        @for (digit of ('' + (date | date:'mm')).split(''); track $index) {
+          <span class="digit">{{ digit }}</span>
+        }
+        <span class="separator">:</span>
+        @for (digit of ('' + (date | date:'ss')).split(''); track $index) {
+          <span class="digit flip">{{ digit }}</span>
+        }
+      </div>
+    </div>
+  </div>
 </div>

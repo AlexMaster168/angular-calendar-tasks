@@ -1,13 +1,13 @@
-import {Pipe, PipeTransform} from '@angular/core';
-import * as moment from 'moment'
-moment.locale("uk")
+import { Pipe, PipeTransform } from '@angular/core';
+import moment from 'moment';
+moment.locale('uk');
 
 @Pipe({
   name: 'moment',
   pure: false
 })
 export class MomentPipe implements PipeTransform {
-  transform(m: moment.Moment, format: string = 'MMMM YYYY'): string {
-    return m.format(format)
+  transform(m: moment.Moment | null, format: string = 'MMMM YYYY'): string {
+    return m ? m.format(format) : '';
   }
 }

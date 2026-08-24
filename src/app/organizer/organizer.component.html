@@ -1,53 +1,83 @@
-<section *ngIf="isOpen">
-  <div class="modal-body">
-    <h1>{{tasks[indexTask].id}}</h1>
-      <button class='btn' (click)="isOpen = false">&times;</button>
-      <input type="text" [(ngModel)]="tasks[indexTask].title">
-      <fa-icon class="btn btn-primary" [icon]="faPenToSquare" (click)="update(tasks[indexTask])"></fa-icon>
+@if (isOpen) {
+  <div class="edit-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Редактирование задачи</h3>
+        <button class="close-btn" (click)="isOpen = false">
+          <fa-icon [icon]="faXmark"></fa-icon>
+        </button>
+      </div>
+      <form [formGroup]="editForm" (ngSubmit)="update(tasks[indexTask])">
+        <input type="text" formControlName="edit" class="edit-input" autofocus>
+        <div class="modal-actions">
+          <button type="button" class="btn-cancel" (click)="isOpen = false">Отмена</button>
+          <button type="submit" class="btn-save" [disabled]="editForm.invalid">
+            <fa-icon [icon]="faCheck"></fa-icon> Сохранить
+          </button>
+        </div>
+      </form>
+    </div>
   </div>
-</section>
+}
 
-
-<section>
-  <header>
-    Organizer: <strong>{{dateService.date | async | moment:'DD.MM.YYYY'}}</strong>
-    <hr/>
+<div class="organizer-card">
+  <header class="organizer-header">
+    <div class="header-title">
+      <span class="header-icon">📋</span>
+      <span>Organizer: <strong>{{ dateService.date | async | moment:'DD.MM.YYYY' }}</strong></span>
+    </div>
   </header>
 
-  <div class="filter">
+  <div class="search-box">
     <input
       type="text"
-      placeholder="Введите ваш запрос..."
+      placeholder="Поиск задач..."
       [(ngModel)]="searchString"
     >
   </div>
 
-  <main>
-    <ul *ngIf="tasks.length; else noTasks">
-      <li class="task" *ngFor="let task of tasks | tasksFilter:searchString; let i = index">
-        <span>
-          <strong>{{i + 1}}</strong>
-          {{task.title}}
-        </span>
-        <fa-icon class="btn btn-primary" [icon]="faTrashRestore" (click)="remove(task)"></fa-icon>
-        <fa-icon class="btn btn-primary" [icon]="faPenToSquare" (click)="allowUpdate(task)"></fa-icon>
-      </li>
-    </ul>
-    <ng-template #noTasks>
-      <p class="text-center">Нет задач на этот день...</p>
-    </ng-template>
+  <main class="task-list">
+    @if (tasks.length) {
+      <ul>
+        @for (task of tasks | tasksFilter:searchString; track task.id; let i = $index) {
+          <li class="task-item">
+            <span class="task-number">{{ i + 1 }}</span>
+            <span class="task-title">{{ task.title }}</span>
+            <div class="task-actions">
+              <button class="action-btn delete" (click)="remove(task)">
+                <fa-icon [icon]="faTrashRestore"></fa-icon>
+              </button>
+              <button class="action-btn edit" (click)="allowUpdate(task)">
+                <fa-icon [icon]="faPenToSquare"></fa-icon>
+              </button>
+            </div>
+          </li>
+        }
+      </ul>
+    } @else {
+      <div class="no-tasks">
+        <span class="no-tasks-icon">📝</span>
+        <p>Нет задач на этот день</p>
+      </div>
+    }
   </main>
 
-  <footer>
-    <form (ngSubmit)="submit()" [formGroup]="form">
-      <input type="text" formControlName="title">
-
+  <footer class="add-task">
+    <form (ngSubmit)="submit()" [formGroup]="form" class="add-form">
+      <input
+        type="text"
+        formControlName="title"
+        placeholder="Новая задача..."
+        class="add-input"
+      >
       <button
         type="submit"
-        class="btn btn-primary btn-block"
+        class="add-btn"
         [disabled]="form.invalid"
-      >Add
+      >
+        <fa-icon [icon]="faPlus"></fa-icon>
+        Add
       </button>
     </form>
   </footer>
-</section>
+</div>

@@ -1,27 +1,56 @@
-# AngularOrganizer
+# Angular Organizer
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.3.2.
+Современный календарь-органайзер на Angular 22 с Firebase backend.
 
-## Development server
+## Технологии
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+- **Angular 22** — standalone компоненты, новый control flow (`@if`, `@for`)
+- **Firebase Realtime Database** — хранение задач
+- **Bootstrap 5.3** + **ng-bootstrap 21**
+- **FontAwesome 7** — иконки
+- **SCSS** — стилизация
+- **moment.js** — работа с датами
+- **TypeScript 5.6**
 
-## Code scaffolding
+## Возможности
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- Календарь с навигацией по месяцам
+- Добавление, редактирование и удаление задач
+- Поиск задач по названию
+- Стильные часы с анимацией цифр
+- Адаптивный дизайн
+- Градиентный UI с анимациями
 
-## Build
+## Запуск
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+```bash
+# Установка зависимостей
+pnpm install
 
-## Running unit tests
+# Запуск dev-сервера
+pnpm start
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+# Сборка для продакшена
+pnpm build
+```
 
-## Running end-to-end tests
+## Структура проекта
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+```
+src/
+├── app/
+│   ├── calendar/       # Компонент календаря
+│   ├── selector/       # Навигация по месяцам + часы
+│   ├── organizer/      # Управление задачами
+│   └── shared/         # Сервисы и трубы
+├── styles.scss         # Глобальные стили
+└── main.ts             # Точка входа
+```
 
-## Further help
+## Деплой
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+Приложение автоматически деплоится на Vercel при пуше в основную ветку.
+
+## Лицензия
+
+MIT

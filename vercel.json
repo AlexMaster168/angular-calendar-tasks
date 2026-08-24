@@ -1,0 +1,8 @@
+{
+  "buildCommand": "npx ng build --configuration production",
+  "outputDirectory": "dist/angular-organizer/browser",
+  "framework": "angular",
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}
